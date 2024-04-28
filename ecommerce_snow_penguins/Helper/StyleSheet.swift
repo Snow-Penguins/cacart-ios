@@ -9,7 +9,6 @@ import Foundation
 
 /// `Stylesheet` contains necessary values for us to use for styling purposes.
 enum Stylesheet {
-
     /// Spacing we want to configure our view.
     enum Spacing {
         static let spacing0: CGFloat = 0
@@ -54,4 +53,3 @@ enum Stylesheet {
         static let padding64: CGFloat = 64
     }
 }
-
