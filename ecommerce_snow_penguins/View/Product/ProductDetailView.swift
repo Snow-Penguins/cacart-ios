@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProductDetailView: View {
-
     // MARK: - Properties
 
     /// Product we get from its parent view.
@@ -25,7 +24,10 @@ struct ProductDetailView: View {
                 .font(.title.bold())
             Text("$\(product.price, specifier: "%.2f")")
                 .font(.headline)
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut magna, scelerisque vitae augue et, cursus placerat lorem. In nisi lacus, eleifend tincidunt quam et, consequat semper.")
+            Text("""
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut magna, scelerisque vitae augue et, cursus placerat lorem.
+            In nisi lacus, eleifend tincidunt quam et, consequat semper.
+            """)
             Spacer()
         }
         .padding()

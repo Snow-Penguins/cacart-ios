@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-
     // MARK: - Properties
 
     /// A temporary  manager to manage auth flow.

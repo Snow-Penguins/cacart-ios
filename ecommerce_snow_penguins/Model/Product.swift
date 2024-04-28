@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - Product
+
 struct Product: Codable {
     let id: Int
     let category, name: String

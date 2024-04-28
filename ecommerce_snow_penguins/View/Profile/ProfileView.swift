@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
     // MARK: - Properties
-    
+
     /// A temporary  manager to manage auth flow.
     @EnvironmentObject var authManager: AuthManager
-    
+
     // MARK: - View Conformance
-    
+
     var body: some View {
         NavigationStack {
             VStack {

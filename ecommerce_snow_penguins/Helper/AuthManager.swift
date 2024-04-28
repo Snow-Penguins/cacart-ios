@@ -10,7 +10,6 @@ import SwiftUI
 // TODO: - Fix this with actual auth flow using Supabase
 /// A temporary  manager to manage auth flow.
 class AuthManager: ObservableObject {
-
     // MARK: - Properties
 
     /// A boolean flag to temporarily check if user is logged in or not.

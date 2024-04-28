@@ -5,11 +5,10 @@
 //  Created by Derek Kim on 2024-04-24.
 //
 
-import SwiftUI
 import AuthenticationServices
+import SwiftUI
 
 struct LoginView: View {
-
     // MARK: - Properties
 
     /// A temporary  manager to manage auth flow.
@@ -177,9 +176,9 @@ struct LoginView: View {
             request.requestedScopes = [.fullName, .email]
         } onCompletion: { result in
             switch result {
-            case .success(let result):
+            case let .success(result):
                 print("Apple Auth successful - \(result)")
-            case .failure(let error):
+            case let .failure(error):
                 print("Apple Auth Failed - \(error.localizedDescription)")
             }
         }
@@ -210,9 +209,7 @@ struct LoginView: View {
         HStack {
             Text("Not a member yet?")
                 .foregroundStyle(.secondary)
-            Button {
-
-            } label: {
+            Button {} label: {
                 Text("Sign Up")
             }
         }

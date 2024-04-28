@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CartView: View {
-
     // MARK: - View Conformance
 
     var body: some View {
@@ -34,9 +33,7 @@ struct CartView: View {
             Text("Looking for ideas?")
                 .font(.headline)
 
-            Button {
-
-            } label: {
+            Button {} label: {
                 Text("Go Shopping")
                     .font(.headline)
             }

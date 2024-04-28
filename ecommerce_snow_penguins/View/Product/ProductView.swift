@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProductView: View {
-
     // MARK: - Properties
 
     /// A string to keep track of search text we want to pass as search query.
@@ -90,9 +89,9 @@ struct ProductView: View {
     /// Search results we want to display to the user based on search text query.
     private var searchResults: [Product] {
         if searchText.isEmpty {
-            return products
+            products
         } else {
-            return products.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+            products.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
     }
 }

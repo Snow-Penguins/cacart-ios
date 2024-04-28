@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-
     // MARK: - View Conformance
 
     var body: some View {
