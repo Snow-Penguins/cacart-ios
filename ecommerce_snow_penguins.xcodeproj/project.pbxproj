@@ -21,6 +21,8 @@
 		653B27C52BDD81D60064B571 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B27B42BDD81D60064B571 /* MainView.swift */; };
 		653B27C62BDD81D60064B571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 653B27B72BDD81D60064B571 /* Assets.xcassets */; };
 		653B27C72BDD81D60064B571 /* ecommerce_snow_penguinsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B27B82BDD81D60064B571 /* ecommerce_snow_penguinsApp.swift */; };
+		653B27C92BDDE2A20064B571 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B27C82BDDE2A20064B571 /* Tab.swift */; };
+		653B27CB2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B27CA2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		653B27B42BDD81D60064B571 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		653B27B72BDD81D60064B571 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		653B27B82BDD81D60064B571 /* ecommerce_snow_penguinsApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ecommerce_snow_penguinsApp.swift; sourceTree = "<group>"; };
+		653B27C82BDDE2A20064B571 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		653B27CA2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollTargetBehaviour.swift; sourceTree = "<group>"; };
 		656FB3FC2BD8C6180038160C /* ecommerce-snow-penguins.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ecommerce-snow-penguins.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -57,6 +61,7 @@
 			children = (
 				653B279E2BDD81D60064B571 /* AuthManager.swift */,
 				653B279F2BDD81D60064B571 /* Color+.swift */,
+				653B27CA2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -65,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				653B27A12BDD81D60064B571 /* Product.swift */,
+				653B27C82BDDE2A20064B571 /* Tab.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -270,6 +276,8 @@
 				653B27C12BDD81D60064B571 /* ProductDetailView.swift in Sources */,
 				653B27BA2BDD81D60064B571 /* AuthManager.swift in Sources */,
 				653B27C72BDD81D60064B571 /* ecommerce_snow_penguinsApp.swift in Sources */,
+				653B27C92BDDE2A20064B571 /* Tab.swift in Sources */,
+				653B27CB2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift in Sources */,
 				653B27C42BDD81D60064B571 /* ContentView.swift in Sources */,
 				653B27BB2BDD81D60064B571 /* Color+.swift in Sources */,
 				653B27BF2BDD81D60064B571 /* LoginView.swift in Sources */,

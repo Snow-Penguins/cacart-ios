@@ -13,7 +13,19 @@ struct ProductView: View {
     /// A string to keep track of search text we want to pass as search query.
     @State private var searchText: String = ""
 
-    /// Spacing of 20 we use to define our spacing between objects
+    /// A state variable to indicate which tab is active. Defaults to `.home`.
+    @State private var activeTab: Tab = .home
+
+    /// A property to determine which color scheme user is on.
+    @Environment(\.colorScheme) private var scheme
+
+    /// A Namespace property to control the active tab bar's animation.
+    @Namespace private var animation
+
+    /// A state that determines if user is on a specific view or field.
+    @FocusState private var isSearching: Bool
+
+    /// Spacing of 20 we use to define our spacing between objects.
     let spacing: CGFloat = 20
 
     /// Padding of 16 we want to use to define our padding.
@@ -37,44 +49,68 @@ struct ProductView: View {
     ]
 
     /// Column that holds products we want to show.
-    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
+    let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 16), count: 3)
+
+    // MARK: - View Conformance
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(searchResults.shuffled(), id: \.id) { product in
-                        VStack {
-                            NavigationLink {
-                                ProductDetailView(product: product)
-                            } label: {
-                                Image(product.imageName)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: imageSize, height: imageSize)
-                                    .background(Color.gray.opacity(0.2))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                            }
-
-                            VStack(alignment: .leading) {
-                                Text(product.name)
-                                    .font(.headline)
-                                    .multilineTextAlignment(.leading)
-                                    .foregroundColor(.primary)
-                                Text("$\(product.price, specifier: "%.2f")")
-                                    .font(.subheadline)
-                                    .multilineTextAlignment(.leading)
-                                    .foregroundColor(.secondary)
-                                Spacer()
-                            }
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(searchResults.shuffled(), id: \.id) { product in
+                    VStack(alignment: .leading) {
+                        NavigationLink {
+                            ProductDetailView(product: product)
+                        } label: {
+                            productCell(product: product)
                         }
                     }
                 }
-                .padding(.horizontal, padding)
             }
-            .navigationTitle("Product")
+            .safeAreaPadding(15)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                expandableNavigationBar()
+            }
+            .animation(.snappy(duration: 0.3, extraBounce: 0), value: isSearching)
         }
-        .searchable(text: $searchText, prompt: "Search for anything on Cacart!")
+        .scrollTargetBehavior(CustomScrollTargetBehaviour())
+        .background(.gray.opacity(0.15))
+        .contentMargins(.top, 190, for: .scrollIndicators)
+    }
+
+    // MARK: - Computed Properties
+
+    /// A scrollable filter view with options in capsule style view.
+    var filterView: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 12) {
+                ForEach(Tab.allCases, id: \.rawValue) { tab in
+                    Button {
+                        withAnimation(.snappy) {
+                            activeTab = tab
+                        }
+                    } label: {
+                        Text(tab.rawValue)
+                            .font(.callout)
+                            .foregroundStyle(activeTab == tab ? (scheme == .dark ? .black : .white) : Color.primary)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 15)
+                            .background {
+                                if activeTab == tab {
+                                    Capsule()
+                                        .fill(Color.primary)
+                                        .matchedGeometryEffect(id: "ACTIVETAB", in: animation)
+                                } else {
+                                    Capsule()
+                                        .fill(.background)
+                                }
+                            }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
+        .frame(height: 50)
     }
 
     /// Calculates the available width and height for each image.
@@ -83,7 +119,7 @@ struct ProductView: View {
         let totalPadding = padding * 2
         let totalSpacing = CGFloat(columns.count - 1) * spacing
         let availableWidth = screenWidth - totalPadding - totalSpacing
-        return availableWidth / CGFloat(columns.count)
+        return (availableWidth / CGFloat(columns.count)) + 10
     }
 
     /// Search results we want to display to the user based on search text query.
@@ -93,6 +129,105 @@ struct ProductView: View {
         } else {
             products.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
+    }
+
+    // MARK: - Public Methods
+
+    /// A product cell we want to show user to present product information.
+    /// - Parameter product: Takes `Product` object to pass the product data.
+    /// - Returns: A view of `ProductCell` we want to show user.
+    @ViewBuilder
+    func productCell(product: Product) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Image(product.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(width: imageSize, height: imageSize)
+                .background(Color.gray.opacity(0.2))
+                .clipShape(.rect(topLeadingRadius: 10, topTrailingRadius: 10))
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text(product.name)
+                    .font(.headline)
+                    .foregroundStyle(.black)
+                    .padding([.leading, .top], 8)
+
+                Text("$\(product.price, specifier: "%.2f")")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(.gray)
+                    .padding(.leading, 8)
+
+                Spacer()
+            }
+            .frame(width: imageSize, alignment: .leading)
+            .background(scheme == .dark ? .white : .white)
+        }
+        .multilineTextAlignment(.leading)
+        .clipShape(.rect(bottomLeadingRadius: 10, bottomTrailingRadius: 10))
+        .padding(.leading, 10)
+    }
+
+    /// An expandable navigation bar that represents customized navigation bar.
+    /// - Parameter title: A string that represents the navigation title.
+    /// - Returns: A view that contains navigation title, searchable field, and custom tab selection view.
+    @ViewBuilder
+    func expandableNavigationBar(_ title: String = "Product") -> some View {
+        GeometryReader { proxy in
+            let minY = proxy.frame(in: .scrollView(axis: .vertical)).minY
+            let scrollviewHeight = proxy.bounds(of: .scrollView(axis: .vertical))?.height ?? 0
+            let scaleProgress = minY > 0 ? 1 + (max(min(minY / scrollviewHeight, 1), 0) * 0.5) : 1
+            let progress = isSearching ? 1 : max(min(-minY / 70, 1), 0)
+
+            VStack(spacing: 10) {
+                Text(title)
+                    .font(.largeTitle.bold())
+                    .scaleEffect(scaleProgress, anchor: .topLeading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom, 10)
+
+                HStack(spacing: 12) {
+                    Image(systemName: "magnifyingglass")
+                        .font(.title)
+
+                    TextField("Search for anything on Cacart!", text: $searchText)
+                        .focused($isSearching)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+
+                    if isSearching {
+                        Button {
+                            isSearching = false
+                            searchText = ""
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.title)
+                        }
+                        .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
+                    }
+                }
+                .foregroundStyle(.primary)
+                .padding(.vertical, 10)
+                .padding(.horizontal, 15 - (progress * 15))
+                .frame(height: 45)
+                .clipShape(.capsule)
+                .background {
+                    RoundedRectangle(cornerRadius: 25 - (progress * 25))
+                        .fill(.background)
+                        .shadow(color: .gray.opacity(0.25), radius: 5, x: 0, y: 5)
+                        .padding(.top, -progress * 190)
+                        .padding(.bottom, -progress * 65)
+                        .padding(.horizontal, -progress * 15)
+                }
+                filterView
+            }
+            .padding(.top, 25)
+            .safeAreaPadding(.horizontal, 15)
+            .offset(y: minY < 0 || isSearching ? -minY : 0)
+            .offset(y: -progress * 65)
+        }
+        .frame(height: 190)
+        .padding(.bottom, 10)
+        .padding(.bottom, isSearching ? -65 : 0)
     }
 }
 
