@@ -25,12 +25,6 @@ struct ProductView: View {
     /// A state that determines if user is on a specific view or field.
     @FocusState private var isSearching: Bool
 
-    /// Spacing of 20 we use to define our spacing between objects.
-    let spacing: CGFloat = 20
-
-    /// Padding of 16 we want to use to define our padding.
-    let padding: CGFloat = 16
-
     // TODO: - REMOVE once we have live data.
     /// Mock Data to show products.
     let products = [
@@ -49,13 +43,13 @@ struct ProductView: View {
     ]
 
     /// Column that holds products we want to show.
-    let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 16), count: 3)
+    let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: Stylesheet.Spacing.spacing16), count: 3)
 
     // MARK: - View Conformance
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
+            LazyVGrid(columns: columns, spacing: Stylesheet.Spacing.spacing20) {
                 ForEach(searchResults.shuffled(), id: \.id) { product in
                     VStack(alignment: .leading) {
                         NavigationLink {
@@ -66,8 +60,8 @@ struct ProductView: View {
                     }
                 }
             }
-            .safeAreaPadding(15)
-            .safeAreaInset(edge: .top, spacing: 0) {
+            .safeAreaPadding(Stylesheet.Padding.padding16)
+            .safeAreaInset(edge: .top, spacing: Stylesheet.Spacing.spacing0) {
                 expandableNavigationBar()
             }
             .animation(.snappy(duration: 0.3, extraBounce: 0), value: isSearching)
@@ -82,7 +76,7 @@ struct ProductView: View {
     /// A scrollable filter view with options in capsule style view.
     var filterView: some View {
         ScrollView(.horizontal) {
-            HStack(spacing: 12) {
+            HStack(spacing: Stylesheet.Spacing.spacing12) {
                 ForEach(Tab.allCases, id: \.rawValue) { tab in
                     Button {
                         withAnimation(.snappy) {
@@ -92,8 +86,8 @@ struct ProductView: View {
                         Text(tab.rawValue)
                             .font(.callout)
                             .foregroundStyle(activeTab == tab ? (scheme == .dark ? .black : .white) : Color.primary)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 15)
+                            .padding(.vertical, Stylesheet.Padding.padding8)
+                            .padding(.horizontal, Stylesheet.Padding.padding16)
                             .background {
                                 if activeTab == tab {
                                     Capsule()
@@ -116,8 +110,8 @@ struct ProductView: View {
     /// Calculates the available width and height for each image.
     private var imageSize: CGFloat {
         let screenWidth = UIScreen.main.bounds.size.width
-        let totalPadding = padding * 2
-        let totalSpacing = CGFloat(columns.count - 1) * spacing
+        let totalPadding = Stylesheet.Padding.padding16 * 2
+        let totalSpacing = CGFloat(columns.count - 1) * Stylesheet.Spacing.spacing20
         let availableWidth = screenWidth - totalPadding - totalSpacing
         return (availableWidth / CGFloat(columns.count)) + 10
     }
@@ -138,7 +132,7 @@ struct ProductView: View {
     /// - Returns: A view of `ProductCell` we want to show user.
     @ViewBuilder
     func productCell(product: Product) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: Stylesheet.Spacing.spacing0) {
             Image(product.imageName)
                 .resizable()
                 .scaledToFill()
@@ -146,16 +140,16 @@ struct ProductView: View {
                 .background(Color.gray.opacity(0.2))
                 .clipShape(.rect(topLeadingRadius: 10, topTrailingRadius: 10))
 
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: Stylesheet.Spacing.spacing8) {
                 Text(product.name)
                     .font(.headline)
                     .foregroundStyle(.black)
-                    .padding([.leading, .top], 8)
+                    .padding([.leading, .top], Stylesheet.Padding.padding8)
 
                 Text("$\(product.price, specifier: "%.2f")")
                     .font(.subheadline.bold())
                     .foregroundStyle(.gray)
-                    .padding(.leading, 8)
+                    .padding(.leading, Stylesheet.Padding.padding8)
 
                 Spacer()
             }
@@ -164,7 +158,7 @@ struct ProductView: View {
         }
         .multilineTextAlignment(.leading)
         .clipShape(.rect(bottomLeadingRadius: 10, bottomTrailingRadius: 10))
-        .padding(.leading, 10)
+        .padding(.leading, Stylesheet.Padding.padding10)
     }
 
     /// An expandable navigation bar that represents customized navigation bar.
@@ -178,14 +172,14 @@ struct ProductView: View {
             let scaleProgress = minY > 0 ? 1 + (max(min(minY / scrollviewHeight, 1), 0) * 0.5) : 1
             let progress = isSearching ? 1 : max(min(-minY / 70, 1), 0)
 
-            VStack(spacing: 10) {
+            VStack(spacing: Stylesheet.Spacing.spacing10) {
                 Text(title)
                     .font(.largeTitle.bold())
                     .scaleEffect(scaleProgress, anchor: .topLeading)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, Stylesheet.Padding.padding10)
 
-                HStack(spacing: 12) {
+                HStack(spacing: Stylesheet.Spacing.spacing12) {
                     Image(systemName: "magnifyingglass")
                         .font(.title)
 
@@ -206,7 +200,7 @@ struct ProductView: View {
                     }
                 }
                 .foregroundStyle(.primary)
-                .padding(.vertical, 10)
+                .padding(.vertical, Stylesheet.Padding.padding10)
                 .padding(.horizontal, 15 - (progress * 15))
                 .frame(height: 45)
                 .clipShape(.capsule)
@@ -220,14 +214,14 @@ struct ProductView: View {
                 }
                 filterView
             }
-            .padding(.top, 25)
-            .safeAreaPadding(.horizontal, 15)
+            .padding(.top, Stylesheet.Padding.padding24)
+            .safeAreaPadding(.horizontal, Stylesheet.Padding.padding16)
             .offset(y: minY < 0 || isSearching ? -minY : 0)
             .offset(y: -progress * 65)
         }
         .frame(height: 190)
-        .padding(.bottom, 10)
-        .padding(.bottom, isSearching ? -65 : 0)
+        .padding(.bottom, Stylesheet.Padding.padding10)
+        .padding(.bottom, isSearching ? -Stylesheet.Padding.padding64 : Stylesheet.Padding.padding0)
     }
 }
 
