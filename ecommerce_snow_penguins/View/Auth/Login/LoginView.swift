@@ -5,10 +5,18 @@
 //  Created by Derek Kim on 2024-04-24.
 //
 
-import AuthenticationServices
 import SwiftUI
 
 struct LoginView: View {
+    // MARK: - Enum
+
+    enum SheetType: String, Identifiable {
+        case forgotPassword = "Forgot Password"
+        case signUp = "Sign Up"
+
+        var id: String { rawValue }
+    }
+
     // MARK: - Properties
 
     /// A temporary  manager to manage auth flow.
@@ -23,8 +31,8 @@ struct LoginView: View {
     /// A boolean flag to determine visibility of the password.
     @State var isPasswordVisible: Bool = false
 
-    /// A boolean flag to show alert when toggled.
-    @State var showAlert: Bool = false
+    // State for determining the sheet type. Defaults to nil.
+    @State private var sheetType: SheetType? = nil
 
     /// Focus state to indicate that the email text field is selected.
     @FocusState private var emailTextFieldFocused: Bool
@@ -36,13 +44,13 @@ struct LoginView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 32) {
-                imageView
+            VStack(spacing: Stylesheet.Spacing.spacing24) {
+                logoImageView
                 loginTextField
                 passwordTextField
                 loginButton
-                dividerText
-                socialLoginButtons
+                DividerWithTextView(dividerTextType: .connectWith)
+                SocialLoginButtonsView()
                 registrationAndPasswordRetrieval
             }
             .padding(.horizontal)
@@ -57,8 +65,12 @@ struct LoginView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showAlert) {
-                ForgotPasswordView()
+            .sheet(item: $sheetType) { type in
+                if type == .forgotPassword {
+                    ForgotPasswordView()
+                } else {
+                    SignUpView()
+                }
             }
         }
     }
@@ -66,7 +78,7 @@ struct LoginView: View {
     // MARK: - Computed Properties
 
     /// Logo image we want to show user.
-    var imageView: some View {
+    var logoImageView: some View {
         Image("cacart_logo")
             .resizable()
             .scaledToFit()
@@ -142,50 +154,6 @@ struct LoginView: View {
             .frame(height: 1)
     }
 
-    /// Social login buttons we want to allow user to use for logging in.
-    @ViewBuilder
-    var socialLoginButtons: some View {
-        googleLoginButton
-        appleLoginButton
-    }
-
-    /// Google social login button we want to show user.
-    var googleLoginButton: some View {
-        Button {
-            print("Signing into Google")
-        } label: {
-            HStack {
-                Image("ic_google")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 18, height: 18)
-                Text("Continue with Google")
-                    .foregroundStyle(.black)
-            }
-            .frame(maxWidth: .infinity, maxHeight: 50)
-            .overlay {
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(.gray, lineWidth: 2)
-            }
-        }
-    }
-
-    /// Apple social login button we want to show user.
-    var appleLoginButton: some View {
-        SignInWithAppleButton(.signIn) { request in
-            request.requestedScopes = [.fullName, .email]
-        } onCompletion: { result in
-            switch result {
-            case let .success(result):
-                print("Apple Auth successful - \(result)")
-            case let .failure(error):
-                print("Apple Auth Failed - \(error.localizedDescription)")
-            }
-        }
-        .signInWithAppleButtonStyle(.black)
-        .frame(height: 50)
-    }
-
     /// A VStack view that consists two different buttons.
     var registrationAndPasswordRetrieval: some View {
         VStack(spacing: 8) {
@@ -197,7 +165,7 @@ struct LoginView: View {
     /// Forgot password button we want to show user.
     var forgotPasswordButton: some View {
         Button {
-            showAlert.toggle()
+            sheetType = .forgotPassword
         } label: {
             Text("Forgot Password?")
                 .foregroundStyle(.black)
@@ -209,7 +177,9 @@ struct LoginView: View {
         HStack {
             Text("Not a member yet?")
                 .foregroundStyle(.secondary)
-            Button {} label: {
+            Button {
+                sheetType = .signUp
+            } label: {
                 Text("Sign Up")
             }
         }
