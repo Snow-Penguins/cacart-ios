@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ForgotPasswordView: View {
-
     // MARK: - Properties
 
     /// A string of email that user enters.
