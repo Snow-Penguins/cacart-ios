@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		652B3B252BE3285E00DC3016 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B3B242BE3285E00DC3016 /* SignUpView.swift */; };
+		652B3B282BE34E8900DC3016 /* TermsAndPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B3B272BE34E8900DC3016 /* TermsAndPrivacyView.swift */; };
+		652B3B2A2BE34EEA00DC3016 /* TermsAndPolicySheetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B3B292BE34EEA00DC3016 /* TermsAndPolicySheetType.swift */; };
+		652B3B2C2BE3541300DC3016 /* DividerWithTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B3B2B2BE3541300DC3016 /* DividerWithTextView.swift */; };
+		652B3B2E2BE355B600DC3016 /* SocialLoginButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B3B2D2BE355B600DC3016 /* SocialLoginButtonsView.swift */; };
 		653B27BA2BDD81D60064B571 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B279E2BDD81D60064B571 /* AuthManager.swift */; };
 		653B27BB2BDD81D60064B571 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B279F2BDD81D60064B571 /* Color+.swift */; };
 		653B27BC2BDD81D60064B571 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B27A12BDD81D60064B571 /* Product.swift */; };
@@ -27,6 +32,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		652B3B242BE3285E00DC3016 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		652B3B262BE34D2D00DC3016 /* ecommerce-snow-penguins-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ecommerce-snow-penguins-Info.plist"; sourceTree = "<group>"; };
+		652B3B272BE34E8900DC3016 /* TermsAndPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPrivacyView.swift; sourceTree = "<group>"; };
+		652B3B292BE34EEA00DC3016 /* TermsAndPolicySheetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPolicySheetType.swift; sourceTree = "<group>"; };
+		652B3B2B2BE3541300DC3016 /* DividerWithTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerWithTextView.swift; sourceTree = "<group>"; };
+		652B3B2D2BE355B600DC3016 /* SocialLoginButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginButtonsView.swift; sourceTree = "<group>"; };
 		653B279E2BDD81D60064B571 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		653B279F2BDD81D60064B571 /* Color+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		653B27A12BDD81D60064B571 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
@@ -58,6 +69,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		652B3B232BE3285500DC3016 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				652B3B242BE3285E00DC3016 /* SignUpView.swift */,
+				652B3B272BE34E8900DC3016 /* TermsAndPrivacyView.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		653B27A02BDD81D60064B571 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +85,9 @@
 				653B279F2BDD81D60064B571 /* Color+.swift */,
 				653B27CA2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift */,
 				653B27CC2BDE10220064B571 /* StyleSheet.swift */,
+				652B3B292BE34EEA00DC3016 /* TermsAndPolicySheetType.swift */,
+				652B3B2B2BE3541300DC3016 /* DividerWithTextView.swift */,
+				652B3B2D2BE355B600DC3016 /* SocialLoginButtonsView.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -105,6 +128,7 @@
 		653B27A92BDD81D60064B571 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				652B3B232BE3285500DC3016 /* SignUp */,
 				653B27A62BDD81D60064B571 /* ForgotPassword */,
 				653B27A82BDD81D60064B571 /* Login */,
 			);
@@ -189,6 +213,7 @@
 		656FB3F32BD8C6180038160C = {
 			isa = PBXGroup;
 			children = (
+				652B3B262BE34D2D00DC3016 /* ecommerce-snow-penguins-Info.plist */,
 				653B27B92BDD81D60064B571 /* ecommerce_snow_penguins */,
 				656FB3FD2BD8C6180038160C /* Products */,
 			);
@@ -273,14 +298,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				653B27C22BDD81D60064B571 /* ProductView.swift in Sources */,
+				652B3B282BE34E8900DC3016 /* TermsAndPrivacyView.swift in Sources */,
+				652B3B2C2BE3541300DC3016 /* DividerWithTextView.swift in Sources */,
 				653B27C02BDD81D60064B571 /* CartView.swift in Sources */,
 				653B27BE2BDD81D60064B571 /* ForgotPasswordView.swift in Sources */,
 				653B27BC2BDD81D60064B571 /* Product.swift in Sources */,
 				653B27C12BDD81D60064B571 /* ProductDetailView.swift in Sources */,
 				653B27BA2BDD81D60064B571 /* AuthManager.swift in Sources */,
 				653B27C72BDD81D60064B571 /* ecommerce_snow_penguinsApp.swift in Sources */,
+				652B3B2E2BE355B600DC3016 /* SocialLoginButtonsView.swift in Sources */,
+				652B3B252BE3285E00DC3016 /* SignUpView.swift in Sources */,
 				653B27C92BDDE2A20064B571 /* Tab.swift in Sources */,
 				653B27CB2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift in Sources */,
+				652B3B2A2BE34EEA00DC3016 /* TermsAndPolicySheetType.swift in Sources */,
 				653B27C42BDD81D60064B571 /* ContentView.swift in Sources */,
 				653B27BB2BDD81D60064B571 /* Color+.swift in Sources */,
 				653B27CD2BDE10220064B571 /* StyleSheet.swift in Sources */,
@@ -423,6 +453,7 @@
 				DEVELOPMENT_TEAM = U7J6A6CHGG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ecommerce-snow-penguins-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -452,6 +483,7 @@
 				DEVELOPMENT_TEAM = U7J6A6CHGG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ecommerce-snow-penguins-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
