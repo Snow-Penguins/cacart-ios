@@ -11,9 +11,10 @@ struct LoginView: View {
     // MARK: - Enum
 
     enum SheetType: String, Identifiable {
-        case forgotPassword = "Forgot Password"
-        case signUp = "Sign Up"
+        case forgotPassword
+        case signUp
 
+        /// Id of each cases of the sheet type.
         var id: String { rawValue }
     }
 
@@ -125,7 +126,7 @@ struct LoginView: View {
     /// Sign in button to allow user to try login.
     var loginButton: some View {
         Button {
-            print("hehe")
+            print("Logging in...")
         } label: {
             Text("Sign In")
                 .font(.title3)
