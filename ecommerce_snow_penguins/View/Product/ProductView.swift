@@ -28,18 +28,106 @@ struct ProductView: View {
     // TODO: - REMOVE once we have live data.
     /// Mock Data to show products.
     let products = [
-        Product(id: 0, category: "Women", name: "Winter Sweater", price: 34.00, imageName: "stacked_pile_of_clothes"),
-        Product(id: 1, category: "Men", name: "Regular Fit Sando T-Shirt", price: 25.00, imageName: "women_regular_clothes"),
-        Product(id: 2, category: "Ladies", name: "Denim Jacket", price: 134.00, imageName: "lady_denim_jacket"),
-        Product(id: 3, category: "Kids", name: "Cotton Play Dress", price: 19.99, imageName: "stacked_pile_of_clothes"),
-        Product(id: 4, category: "Travel", name: "Weekender Duffel Bag", price: 79.00, imageName: "women_regular_clothes"),
-        Product(id: 5, category: "Electronics", name: "Wireless Headphones", price: 99.99, imageName: "lady_denim_jacket"),
-        Product(id: 6, category: "Home", name: "Scented Candle Set", price: 24.50, imageName: "stacked_pile_of_clothes"),
-        Product(id: 7, category: "Sports", name: "Running Shoes", price: 89.95, imageName: "women_regular_clothes"),
-        Product(id: 8, category: "Books", name: "Science Fiction Novel", price: 15.99, imageName: "lady_denim_jacket"),
-        Product(id: 9, category: "Beauty", name: "Moisturizer", price: 32.00, imageName: "stacked_pile_of_clothes"),
-        Product(id: 10, category: "Kids", name: "Cotton Play Dress", price: 59.99, imageName: "stacked_pile_of_clothes"),
-        Product(id: 11, category: "Books", name: "Science Fiction Novel", price: 15.97, imageName: "lady_denim_jacket"),
+        Product(
+            id: 0,
+            categoryId: 1,
+            name: "Winter Sweater",
+            description: nil,
+            productImage: ["winter_sweater", "women_regular_clothes", "lady_denim_jacket"],
+            createdAt: Date(),
+            category: Category(name: "Women"),
+            productItems: [ProductItem(price: 34.00)]
+        ),
+        Product(
+            id: 1,
+            categoryId: 2,
+            name: "Regular Fit Sando T-Shirt",
+            description: nil,
+            productImage: ["regular-fit", "women_regular_clothes"],
+            createdAt: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, // 2 days ago
+            category: Category(name: "Men"),
+            productItems: [ProductItem(price: 25.00)]
+        ),
+        Product(
+            id: 2,
+            categoryId: 3,
+            name: "Denim Jacket",
+            description: nil,
+            productImage: ["denim_jacket", "lady_denim_jacket"],
+            createdAt: Date(),
+            category: Category(name: "Ladies"),
+            productItems: [ProductItem(price: 134.00)]
+        ),
+        Product(
+            id: 3,
+            categoryId: 4,
+            name: "Cotton Play Dress",
+            description: nil,
+            productImage: ["cotton_play_dress", "stacked_pile_of_clothes"],
+            createdAt: Date(),
+            category: Category(name: "Kids"),
+            productItems: [ProductItem(price: 19.99)]
+        ),
+        Product(
+            id: 4,
+            categoryId: 5,
+            name: "Weekender Duffel Bag",
+            description: nil,
+            productImage: ["weekender_duffel_bag", "women_regular_clothes"],
+            createdAt: Date(),
+            category: Category(name: "Travel"),
+            productItems: [ProductItem(price: 79.00)]
+        ),
+        Product(
+            id: 5,
+            categoryId: 1,
+            name: "Cozy Beanie",
+            description: nil,
+            productImage: ["cozy_beanie", "stacked_pile_of_clothes", "women_regular_clothes"],
+            createdAt: Calendar.current.date(byAdding: .day, value: -10, to: Date())!, // 10 days ago
+            category: Category(name: "Women"),
+            productItems: [ProductItem(price: 15.99)]
+        ),
+        Product(
+            id: 6,
+            categoryId: 2,
+            name: "Running Shorts",
+            description: nil,
+            productImage: ["running_shorts", "women_regular_clothes"],
+            createdAt: Date(), // Today
+            category: Category(name: "Men"),
+            productItems: [ProductItem(price: 42.50)]
+        ),
+        Product(
+            id: 7,
+            categoryId: 3,
+            name: "Leather Laptop Bag",
+            description: nil,
+            productImage: ["leather_laptop_bag", "women_regular_clothes"],
+            createdAt: Calendar.current.date(byAdding: .month, value: -2, to: Date())!, // 2 months ago
+            category: Category(name: "Accessories"),
+            productItems: [ProductItem(price: 199.00)]
+        ),
+        Product(
+            id: 8,
+            categoryId: 4,
+            name: "Plush Stuffed Animal",
+            description: nil,
+            productImage: ["plush_stuffed_animal", "stacked_pile_of_clothes"],
+            createdAt: Calendar.current.date(byAdding: .hour, value: -5, to: Date())!, // 5 hours ago
+            category: Category(name: "Kids"),
+            productItems: [ProductItem(price: 12.99)]
+        ),
+        Product(
+            id: 9,
+            categoryId: 5,
+            name: "Hiking Backpack",
+            description: nil,
+            productImage: ["hiking_backpack", "stacked_pile_of_clothes"],
+            createdAt: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!, // Last week
+            category: Category(name: "Travel"),
+            productItems: [ProductItem(price: 99.99)]
+        ),
     ]
 
     /// Column that holds products we want to show.
@@ -48,27 +136,29 @@ struct ProductView: View {
     // MARK: - View Conformance
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: Stylesheet.Spacing.spacing20) {
-                ForEach(searchResults.shuffled(), id: \.id) { product in
-                    VStack(alignment: .leading) {
-                        NavigationLink {
-                            ProductDetailView(product: product)
-                        } label: {
-                            productCell(product: product)
+        NavigationStack {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: Stylesheet.Spacing.spacing20) {
+                    ForEach(searchResults) { product in
+                        VStack(alignment: .leading) {
+                            NavigationLink {
+                                ProductDetailView(product: product)
+                            } label: {
+                                productCell(product: product)
+                            }
                         }
                     }
                 }
+                .safeAreaPadding(Stylesheet.Padding.padding16)
+                .safeAreaInset(edge: .top, spacing: Stylesheet.Spacing.spacing0) {
+                    expandableNavigationBar()
+                }
+                .animation(.snappy(duration: 0.3, extraBounce: 0), value: isSearching)
             }
-            .safeAreaPadding(Stylesheet.Padding.padding16)
-            .safeAreaInset(edge: .top, spacing: Stylesheet.Spacing.spacing0) {
-                expandableNavigationBar()
-            }
-            .animation(.snappy(duration: 0.3, extraBounce: 0), value: isSearching)
+            .scrollTargetBehavior(CustomScrollTargetBehaviour())
+            .background(.gray.opacity(0.15))
+            .contentMargins(.top, 190, for: .scrollIndicators)
         }
-        .scrollTargetBehavior(CustomScrollTargetBehaviour())
-        .background(.gray.opacity(0.15))
-        .contentMargins(.top, 190, for: .scrollIndicators)
     }
 
     // MARK: - Computed Properties
@@ -119,9 +209,19 @@ struct ProductView: View {
     /// Search results we want to display to the user based on search text query.
     private var searchResults: [Product] {
         if searchText.isEmpty {
-            products
+            filteredProductsByDate
         } else {
             products.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
+
+    /// Filtered by `createdAt` results we want to display to the user.
+    private var filteredProductsByDate: [Product] {
+        switch activeTab {
+        case .home, .bestSellers:
+            products
+        case .newReleases:
+            products.sorted(by: { $0.createdAt > $1.createdAt })
         }
     }
 
@@ -133,12 +233,14 @@ struct ProductView: View {
     @ViewBuilder
     func productCell(product: Product) -> some View {
         VStack(alignment: .leading, spacing: Stylesheet.Spacing.spacing0) {
-            Image(product.imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(width: imageSize, height: imageSize)
-                .background(Color.gray.opacity(0.2))
-                .clipShape(.rect(topLeadingRadius: 10, topTrailingRadius: 10))
+            if let image = product.productImage?.first {
+                Image(image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: imageSize, height: imageSize)
+                    .background(Color.gray.opacity(0.2))
+                    .clipShape(.rect(topLeadingRadius: 10, topTrailingRadius: 10))
+            }
 
             VStack(alignment: .leading, spacing: Stylesheet.Spacing.spacing8) {
                 Text(product.name)
@@ -146,10 +248,12 @@ struct ProductView: View {
                     .foregroundStyle(.black)
                     .padding([.leading, .top], Stylesheet.Padding.padding8)
 
-                Text("$\(product.price, specifier: "%.2f")")
-                    .font(.subheadline.bold())
-                    .foregroundStyle(.gray)
-                    .padding(.leading, Stylesheet.Padding.padding8)
+                if let price = product.productItems.first?.price {
+                    Text("$\(price, specifier: "%.2f")")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(.gray)
+                        .padding(.leading, Stylesheet.Padding.padding8)
+                }
 
                 Spacer()
             }
