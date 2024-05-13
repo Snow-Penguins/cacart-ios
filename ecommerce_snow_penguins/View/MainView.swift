@@ -11,7 +11,7 @@ struct MainView: View {
     // MARK: - Properties
 
     /// A temporary  manager to manage auth flow.
-    @StateObject var authManager = AuthManager()
+    @EnvironmentObject var authManager: AuthManager
 
     // MARK: - View Conformance
 
@@ -23,11 +23,9 @@ struct MainView: View {
                 LoginView()
             }
         }
-        .environmentObject(authManager)
     }
 }
 
 #Preview {
     MainView()
-        .environmentObject(AuthManager())
 }

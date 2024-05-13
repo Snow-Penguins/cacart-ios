@@ -29,6 +29,10 @@
 		653B27C92BDDE2A20064B571 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B27C82BDDE2A20064B571 /* Tab.swift */; };
 		653B27CB2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B27CA2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift */; };
 		653B27CD2BDE10220064B571 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B27CC2BDE10220064B571 /* StyleSheet.swift */; };
+		659A322A2BEDAB9C00AB9FD8 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 659A32292BEDAB9C00AB9FD8 /* Supabase */; };
+		659A322C2BEDAC4100AB9FD8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A322B2BEDAC4100AB9FD8 /* User.swift */; };
+		659A322E2BEDAFCD00AB9FD8 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 659A322D2BEDAFCD00AB9FD8 /* Auth */; };
+		659A32312BF19F5D00AB9FD8 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A32302BF19F5D00AB9FD8 /* Validator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +60,9 @@
 		653B27CA2BDE073F0064B571 /* CustomScrollTargetBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollTargetBehaviour.swift; sourceTree = "<group>"; };
 		653B27CC2BDE10220064B571 /* StyleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
 		656FB3FC2BD8C6180038160C /* ecommerce-snow-penguins.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ecommerce-snow-penguins.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		659A322B2BEDAC4100AB9FD8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		659A322F2BEDC2F700AB9FD8 /* ecommerce-snow-penguins.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ecommerce-snow-penguins.entitlements"; sourceTree = "<group>"; };
+		659A32302BF19F5D00AB9FD8 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				659A322E2BEDAFCD00AB9FD8 /* Auth in Frameworks */,
+				659A322A2BEDAB9C00AB9FD8 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +97,7 @@
 				652B3B292BE34EEA00DC3016 /* TermsAndPolicySheetType.swift */,
 				652B3B2B2BE3541300DC3016 /* DividerWithTextView.swift */,
 				652B3B2D2BE355B600DC3016 /* SocialLoginButtonsView.swift */,
+				659A32302BF19F5D00AB9FD8 /* Validator.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -97,6 +107,7 @@
 			children = (
 				653B27A12BDD81D60064B571 /* Product.swift */,
 				653B27C82BDDE2A20064B571 /* Tab.swift */,
+				659A322B2BEDAC4100AB9FD8 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -213,6 +224,7 @@
 		656FB3F32BD8C6180038160C = {
 			isa = PBXGroup;
 			children = (
+				659A322F2BEDC2F700AB9FD8 /* ecommerce-snow-penguins.entitlements */,
 				652B3B262BE34D2D00DC3016 /* ecommerce-snow-penguins-Info.plist */,
 				653B27B92BDD81D60064B571 /* ecommerce_snow_penguins */,
 				656FB3FD2BD8C6180038160C /* Products */,
@@ -243,6 +255,10 @@
 			dependencies = (
 			);
 			name = "ecommerce-snow-penguins";
+			packageProductDependencies = (
+				659A32292BEDAB9C00AB9FD8 /* Supabase */,
+				659A322D2BEDAFCD00AB9FD8 /* Auth */,
+			);
 			productName = "ecommerce-snow-penguins";
 			productReference = 656FB3FC2BD8C6180038160C /* ecommerce-snow-penguins.app */;
 			productType = "com.apple.product-type.application";
@@ -271,6 +287,9 @@
 				Base,
 			);
 			mainGroup = 656FB3F32BD8C6180038160C;
+			packageReferences = (
+				659A32282BEDAB9C00AB9FD8 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			productRefGroup = 656FB3FD2BD8C6180038160C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -313,10 +332,12 @@
 				652B3B2A2BE34EEA00DC3016 /* TermsAndPolicySheetType.swift in Sources */,
 				653B27C42BDD81D60064B571 /* ContentView.swift in Sources */,
 				653B27BB2BDD81D60064B571 /* Color+.swift in Sources */,
+				659A32312BF19F5D00AB9FD8 /* Validator.swift in Sources */,
 				653B27CD2BDE10220064B571 /* StyleSheet.swift in Sources */,
 				653B27BF2BDD81D60064B571 /* LoginView.swift in Sources */,
 				653B27C52BDD81D60064B571 /* MainView.swift in Sources */,
 				653B27C32BDD81D60064B571 /* ProfileView.swift in Sources */,
+				659A322C2BEDAC4100AB9FD8 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +468,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "ecommerce-snow-penguins.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ecommerce_snow_penguins/Preview Content\"";
@@ -477,6 +499,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "ecommerce-snow-penguins.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ecommerce_snow_penguins/Preview Content\"";
@@ -524,6 +547,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		659A32282BEDAB9C00AB9FD8 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		659A32292BEDAB9C00AB9FD8 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 659A32282BEDAB9C00AB9FD8 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+		659A322D2BEDAFCD00AB9FD8 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 659A32282BEDAB9C00AB9FD8 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 656FB3F42BD8C6180038160C /* Project object */;
 }

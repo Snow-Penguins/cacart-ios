@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/derek/Desktop/projects/cacart-ios/ecommerce_snow_penguins.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

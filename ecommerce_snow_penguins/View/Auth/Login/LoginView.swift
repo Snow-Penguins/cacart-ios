@@ -29,6 +29,18 @@ struct LoginView: View {
     /// A string of password that user enters.
     @State var password: String = ""
 
+    /// An error message to show when email validation has failed.  Defaults to `nil`.
+    @State private var emailErrorMessage: String? = nil
+
+    /// An error message to show when password validation has failed.  Defaults to `nil`.
+    @State private var passwordErrorMessage: String? = nil
+
+    /// A state variable to check if email is valid or not. Defaults to `false`.
+    @State private var isEmailValid = false
+
+    /// A state variable to check if password is valid or not. Defaults to `false`.
+    @State private var isPasswordValid = false
+
     /// A boolean flag to determine visibility of the password.
     @State var isPasswordVisible: Bool = false
 
@@ -58,7 +70,9 @@ struct LoginView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        authManager.isLoggedIn = true
+                        Task {
+                            await authManager.signInAnonymously()
+                        }
                     } label: {
                         Text("Continue as guest")
                             .foregroundStyle(.black)
@@ -70,7 +84,7 @@ struct LoginView: View {
                 if type == .forgotPassword {
                     ForgotPasswordView()
                 } else {
-                    SignUpView()
+                    SignUpView(authManager: authManager)
                 }
             }
         }
@@ -88,45 +102,86 @@ struct LoginView: View {
 
     /// TextField that the user use to enter their email to login.
     var loginTextField: some View {
-        TextField("Email", text: $email)
-            .frame(height: 50)
-            .padding(.horizontal, 10)
-            .focused($emailTextFieldFocused)
-            .overlay {
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(emailTextFieldFocused ? .blue : .gray, lineWidth: 2)
+        VStack(alignment: .leading) {
+            TextField("Email", text: $email)
+                .onChange(of: emailTextFieldFocused) {
+                    if !emailTextFieldFocused {
+                        performEmailValidation(email: email)
+                    }
+                }
+                .onChange(of: email) { _, newValue in
+                    if emailErrorMessage != nil {
+                        performEmailValidation(email: newValue)
+                    }
+                }
+                .frame(height: 50)
+                .padding(.horizontal, 10)
+                .focused($emailTextFieldFocused)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Validator.textFieldStrokeColor(isFocused: emailTextFieldFocused, errorMessage: emailErrorMessage))
+                }
+            if let errorMessage = emailErrorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .font(.caption)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+        }
     }
 
     /// TextField that the user use to enter their password to login.
     var passwordTextField: some View {
-        HStack {
-            if isPasswordVisible {
-                TextField("Password", text: $password)
-            } else {
-                SecureField("Password", text: $password)
-            }
+        VStack(alignment: .leading) {
+            HStack {
+                if isPasswordVisible {
+                    TextField("Password", text: $password)
+                } else {
+                    SecureField("Password", text: $password)
+                }
 
-            Button {
-                isPasswordVisible.toggle()
-            } label: {
-                Image(systemName: isPasswordVisible ? "eye" : "eye.slash")
-                    .foregroundStyle(passwordTextFieldFocused ? .blue : .gray)
+                Button {
+                    isPasswordVisible.toggle()
+                } label: {
+                    Image(systemName: isPasswordVisible ? "eye" : "eye.slash")
+                        .foregroundStyle(passwordTextFieldFocused ? .blue : .gray)
+                }
             }
-        }
-        .frame(height: 50)
-        .padding(.horizontal, 10)
-        .focused($passwordTextFieldFocused)
-        .overlay {
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(passwordTextFieldFocused ? .blue : .gray, lineWidth: 2)
+            .onChange(of: passwordTextFieldFocused) {
+                if !passwordTextFieldFocused {
+                    performPasswordValidation(password: password)
+                }
+            }
+            .onChange(of: password) {
+                performPasswordValidation(password: password)
+            }
+            .frame(height: 50)
+            .padding(.horizontal, 10)
+            .focused($passwordTextFieldFocused)
+            .overlay {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Validator.textFieldStrokeColor(isFocused: passwordTextFieldFocused, errorMessage: passwordErrorMessage))
+            }
+            if let errorMessage = passwordErrorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .font(.caption)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 
     /// Sign in button to allow user to try login.
     var loginButton: some View {
         Button {
-            print("Logging in...")
+            performEmailValidation(email: email)
+            performPasswordValidation(password: password)
+
+            if isEmailValid && isPasswordValid {
+                print("Logging in...")
+
+                // TODO: - Perform login via Supabase
+            }
         } label: {
             Text("Sign In")
                 .font(.title3)
@@ -187,7 +242,27 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    LoginView()
-        .environmentObject(AuthManager())
+// MARK: - Private Methods
+
+private extension LoginView {
+
+    /// Performs email validation check for email textfield.
+    /// - Parameter email: String value we take from user entry for email.
+    func performEmailValidation(email: String) {
+        let validationResult = Validator.validateEmail(email: email)
+        emailErrorMessage = validationResult.errorMessage
+        isEmailValid = validationResult.isValid
+    }
+
+    /// Performs password validation check for password textfield.
+    /// - Parameter password: String value we take from user entry for password.
+    func performPasswordValidation(password: String) {
+        if password.isEmpty {
+            passwordErrorMessage = "Password cannot be empty!"
+            isPasswordValid = false
+        } else {
+            passwordErrorMessage = nil
+            isPasswordValid = true
+        }
+    }
 }

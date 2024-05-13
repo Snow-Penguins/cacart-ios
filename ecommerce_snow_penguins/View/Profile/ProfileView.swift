@@ -23,7 +23,9 @@ struct ProfileView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        authManager.logout()
+                        Task {
+                            await authManager.signOut()
+                        }
                     } label: {
                         Text("Log Out")
                     }
